@@ -1,0 +1,17 @@
+App\Entity\Weather:
+    properties:
+        precipitation:
+            - Range:
+                    min: 0
+                    max: 100
+
+App\Entity\City:
+    properties:
+        longitude:
+            - Range:
+                    min: -90
+                    max: 90
+        latitude:
+            - Range:
+                    min: -180
+                    max: 180

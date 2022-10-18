@@ -27,6 +27,11 @@ class City
     #[ORM\JoinColumn(nullable: false)]
     private ?Country $country = null;
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
