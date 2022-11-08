@@ -7,3 +7,7 @@ weather_in_city:
     controller: App\Controller\WeatherController::cityAction
     requirements:
         city: \d+
+
+logout:
+    path: /logout
+    methods: GET

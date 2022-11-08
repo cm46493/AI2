@@ -12,7 +12,9 @@
                 <th>Name</th>
                 <th>Longitude</th>
                 <th>Latitude</th>
-                <th>actions</th>
+                {% if is_granted('ROLE_CITY_SHOW') or is_granted('ROLE_CITY_EDIT') %}
+                    <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -23,8 +25,13 @@
                 <td>{{ city.longitude }}</td>
                 <td>{{ city.latitude }}</td>
                 <td>
-                    <a href="{{ path('app_city_crud_show', {'id': city.id}) }}">show</a>
-                    <a href="{{ path('app_city_crud_edit', {'id': city.id}) }}">edit</a>
+                    {% if is_granted('ROLE_CITY_SHOW') %}
+                        <a href="{{ path('app_city_crud_show', {'id': city.id}) }}">show</a>
+                    {% endif %}
+                    
+                    {% if is_granted('ROLE_CITY_EDIT') %}
+                        <a href="{{ path('app_city_crud_edit', {'id': city.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -35,8 +42,17 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_city_crud_new') }}">Create new</a>
+    {% if is_granted('ROLE_CITY_NEW') %}
+        <a href="{{ path('app_city_crud_new') }}">Create new</a>
+    {% endif %}
+
     <br>
-    <a href="{{ path('app_country_crud_index') }}">Countries</a>
-    <a href="{{ path('app_weather_crud_index') }}">Weather</a>
+    
+    {% if is_granted('ROLE_COUNTRY_INDEX') %}
+        <a href="{{ path('app_country_crud_index') }}">Countries</a>
+    {% endif %}
+
+    {% if is_granted('ROLE_WEATHER_INDEX') %}
+        <a href="{{ path('app_weather_crud_index') }}">Weather</a>
+    {% endif %}
 {% endblock %}

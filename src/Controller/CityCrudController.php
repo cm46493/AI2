@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Form\CityType;
 use App\Repository\CityRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CityCrudController extends AbstractController
 {
     #[Route('/', name: 'app_city_crud_index', methods: ['GET'])]
+    #[IsGranted('ROLE_CITY_INDEX')]
     public function index(CityRepository $cityRepository): Response
     {
         return $this->render('city_crud/index.html.twig', [
@@ -22,6 +24,7 @@ class CityCrudController extends AbstractController
     }
 
     #[Route('/new', name: 'app_city_crud_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_CITY_NEW')]
     public function new(Request $request, CityRepository $cityRepository): Response
     {
         $city = new City();
@@ -41,6 +44,7 @@ class CityCrudController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_city_crud_show', methods: ['GET'])]
+    #[IsGranted('ROLE_CITY_SHOW')]
     public function show(City $city): Response
     {
         return $this->render('city_crud/show.html.twig', [
@@ -49,6 +53,7 @@ class CityCrudController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_city_crud_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_CITY_EDIT')]
     public function edit(Request $request, City $city, CityRepository $cityRepository): Response
     {
         $form = $this->createForm(CityType::class, $city);
@@ -67,6 +72,7 @@ class CityCrudController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_city_crud_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_CITY_DELETE')]
     public function delete(Request $request, City $city, CityRepository $cityRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$city->getId(), $request->request->get('_token'))) {
