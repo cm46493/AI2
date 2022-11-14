@@ -38,6 +38,17 @@ class CountryRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
+    public function findIdByCode($countryCode) {
+        $qb = $this->createQueryBuilder('c');
+        $qb->where('c.code = :code')
+        ->setParameter('code', $countryCode)
+        ->select('c.id');
+
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return $result;
+    }
 
 //    /**
 //     * @return Country[] Returns an array of Country objects

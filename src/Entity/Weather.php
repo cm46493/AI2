@@ -27,6 +27,13 @@ class Weather
     #[ORM\JoinColumn(nullable: false)]
     private ?City $city = null;
 
+    public function __toString()
+    {
+        $date = $this->date->format('d.m.Y');
+        $temp = round($this->temperature);
+        return $date . ": " . $temp . "°C";
+    }
+
     public function getId(): ?int
     {
         return $this->id;

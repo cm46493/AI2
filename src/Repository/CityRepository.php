@@ -39,6 +39,18 @@ class CityRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByCountryAndCity($countryId, $cityName) {
+        $qb = $this->createQueryBuilder('c');
+        $qb->where('c.country = :countryId')
+        ->setParameter('countryId', $countryId)
+        ->andWhere('c.name = :cityName')
+        ->setParameter('cityName', $cityName);
+
+        $query = $qb->getQuery();
+        $result = $query->getSingleResult();
+        return $result;
+    }
+
 //    /**
 //     * @return City[] Returns an array of City objects
 //     */
